@@ -79,7 +79,7 @@ public class WidgetTest extends AbstractScript implements PaintListener {
 
         public final org.powerbot.script.wrappers.Component comp;
         public ArrayList<AComponentData> childComponents = null;
-        public int depth = 0;
+        public int depth = -1;
 
         public AComponentData(final org.powerbot.script.wrappers.Component comp) {
             this.comp = comp;
@@ -165,14 +165,7 @@ public class WidgetTest extends AbstractScript implements PaintListener {
                 if (widget.isValid() && widget.getComponentCount() > 0) {
                     final AWidgetData awiddata = new AWidgetData(widget.getIndex());
                     widgetList.add(awiddata);
-                    for (org.powerbot.script.wrappers.Component curComp : widget.getComponents()) {
-                        final AComponentData curComponentData = new AComponentData(curComp);
-                        awiddata.childComponents.add(curComponentData);
-                        if (curComp.getChildrenCount() > 0) {
-                            curComponentData.childComponents = new ArrayList<>();
-                            recursiveAdd(curComponentData.childComponents, 1, curComp.getChildren());
-                        }
-                    }
+                    recursiveAdd(awiddata.childComponents, 0, widget.getComponents());
                 }
             }
         }
