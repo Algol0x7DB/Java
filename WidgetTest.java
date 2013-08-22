@@ -198,17 +198,7 @@ public class WidgetTest extends AbstractScript implements PaintListener {
             final ArrayList<SearchData> searchDataList = new ArrayList<>();
             for (AWidgetData widgetData : widgetList) {
                 final int wIndex = widgetData.widgetIndex;
-                for (AComponentData curCompData : widgetData.childComponents) {
-                    final int cIndex = curCompData.comp.getIndex();
-                    final org.powerbot.script.wrappers.Component curComp = curCompData.comp.getParent();
-                    final int parentIndex = curComp == null ? -1 : curComp.getIndex();
-                    if (curCompData.hasString(lowerCased)) {
-                        searchDataList.add(new SearchData(wIndex, cIndex, parentIndex));
-                    }
-                    if (curCompData.comp.getChildrenCount() > 0) {
-                        recursiveSearch(searchDataList, widgetData.widgetIndex, curCompData.childComponents, lowerCased);
-                    }
-                }
+                recursiveSearch(searchDataList, wIndex, widgetData.childComponents, lowerCased);
             }
             return searchDataList;
         }
